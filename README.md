@@ -1,8 +1,8 @@
-# Implementation in C++ the clasic pong game based on SDL library
+# The clasic pong game based on SDL library
 
 1. More about the pong game can be found on [wiki pages](https://en.wikipedia.org/wiki/Pong).
 
-2. The implematation is based on code provided in the [Sanjay Madhav's book "Game Programming in C++"](https://www.amazon.com/Game-Programming-Creating-Games-Design/dp/0134597206). The original code is available in [repository](https://github.com/gameprogcpp/code).
+2. The implematation is in C++ and it is based on the source code provided in the [Sanjay Madhav's book "Game Programming in C++"](https://www.amazon.com/Game-Programming-Creating-Games-Design/dp/0134597206). The original code is available in [repository](https://github.com/gameprogcpp/code).
 
 3. The impelemtation is based on [SDL library](https://www.libsdl.org/). 
 
