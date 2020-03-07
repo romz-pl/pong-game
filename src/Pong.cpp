@@ -16,7 +16,7 @@ bool Pong::Initialize()
 
     //
     mPaddlePos.x = 10.0f;
-    mPaddlePos.y = 768.0f/2.0f;
+    mPaddlePos.y = 0.5 * Global::GetWindowH();
     mBallPos.x = 0.5f * Global::GetWindowW();
     mBallPos.y = 0.5f * Global::GetWindowH();
     mBallVel.x = -200.0f;
@@ -86,9 +86,9 @@ void Pong::Update(bool& isRunning)
         {
             mPaddlePos.y = paddleH/2.0f + thickness;
         }
-        else if (mPaddlePos.y > (768.0f - paddleH/2.0f - thickness))
+        else if (mPaddlePos.y > (Global::GetWindowH() - paddleH/2.0f - thickness))
         {
-            mPaddlePos.y = 768.0f - paddleH/2.0f - thickness;
+            mPaddlePos.y = Global::GetWindowH() - paddleH/2.0f - thickness;
         }
     }
 
@@ -128,7 +128,7 @@ void Pong::Update(bool& isRunning)
         mBallVel.y *= -1;
     }
     // Did the ball collide with the bottom wall?
-    else if (mBallPos.y >= (768 - thickness) &&
+    else if (mBallPos.y >= (Global::GetWindowH() - thickness) &&
              mBallVel.y > 0.0f)
     {
         mBallVel.y *= -1;
@@ -162,7 +162,7 @@ void Pong::GenerateOutput()
     SDL_RenderFillRect(Global::renderer.get(), &wall);
 
     // Draw bottom wall
-    wall.y = 768 - thickness;
+    wall.y = Global::GetWindowH() - thickness;
     SDL_RenderFillRect(Global::renderer.get(), &wall);
 
     // Draw right wall
