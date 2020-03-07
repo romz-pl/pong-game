@@ -13,6 +13,9 @@ Game::Game()
 
 }
 
+//
+// Initialize the game
+//
 bool Game::Initialize()
 {
     // Initialize SDL
@@ -61,6 +64,9 @@ bool Game::Initialize()
     return true;
 }
 
+//
+// Runs the game loop until the game is over
+//
 void Game::RunLoop()
 {
     while (mIsRunning)
@@ -71,6 +77,9 @@ void Game::RunLoop()
     }
 }
 
+//
+// Shutdown the game
+//
 void Game::ProcessInput()
 {
     SDL_Event event;
