@@ -7,9 +7,12 @@
 // ----------------------------------------------------------------
 
 #include "Game.h"
+#include "Global_window.h"
 
 int main(int argc, char** argv)
 {
+
+
 	Game game;
 	bool success = game.Initialize();
 	if (success)
@@ -17,5 +20,7 @@ int main(int argc, char** argv)
 		game.RunLoop();
 	}
 	game.Shutdown();
+
+
 	return 0;
 }

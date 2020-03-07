@@ -1,8 +1,8 @@
 #include "Game.h"
+#include "Global_window.h"
 
 Game::Game()
-    : mWindow(nullptr)
-    , mRenderer(nullptr)
+    : mRenderer(nullptr)
     , mIsRunning(true)
 {
 
@@ -21,25 +21,15 @@ bool Game::Initialize()
         return false;
     }
 
-    // Create an SDL Window
-    mWindow = SDL_CreateWindow(
-                "Game Programming in C++ (Chapter 1)", // Window title
-                100,	// Top left x-coordinate of window
-                100,	// Top left y-coordinate of window
-                1024,	// Width of window
-                768,	// Height of window
-                0		// Flags (0 for no flags set)
-                );
-
-    if (!mWindow)
+    if( !InitializeWindow() )
     {
-        SDL_Log("Failed to create window: %s", SDL_GetError());
         return false;
     }
 
+
     //// Create SDL renderer
     mRenderer = SDL_CreateRenderer(
-                mWindow, // Window to create renderer for
+                Global::window.get(), // Window to create renderer for
                 -1,		 // Usually -1
                 SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
                 );
@@ -51,6 +41,30 @@ bool Game::Initialize()
     }
 
     return m_pong.Initialize();
+}
+
+//
+// Create an SDL Window
+//
+bool Game::InitializeWindow()
+{
+    Global::window.init();
+    Global::window.get() = SDL_CreateWindow(
+                "Game Programming in C++ (Chapter 1)", // Window title
+                100,	// Top left x-coordinate of window
+                100,	// Top left y-coordinate of window
+                1024,	// Width of window
+                768,	// Height of window
+                0		// Flags (0 for no flags set)
+                );
+
+    if (!Global::window.get())
+    {
+        SDL_Log("Failed to create window: %s", SDL_GetError());
+        return false;
+    }
+
+    return true;
 }
 
 //
@@ -89,7 +103,9 @@ void Game::GenerateOutput()
 void Game::Shutdown()
 {
     SDL_DestroyRenderer(mRenderer);
-    SDL_DestroyWindow(mWindow);
+    SDL_DestroyWindow(Global::window.get());
     SDL_Quit();
+
+    Global::window.destroy();
 }
 

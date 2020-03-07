@@ -2,6 +2,7 @@ SET(EXE_NAME pong)
 
 add_executable( ${EXE_NAME}
     Game.cpp
+    Global_window.cpp
     Pong.cpp
     Vector2d.cpp
     main.cpp
