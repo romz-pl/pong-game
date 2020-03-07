@@ -11,5 +11,7 @@
 5. In order to build the project make the following steps:
     - clon this git repository into `pong` directory;
     - create build directory outside the cloned source directory;
-    - type: `cd build && cmake ../pong && make`;
+    - type: `cd build && cmake ../pong && make`
     - in order to start the game use `build/src/pong` binary file.
+    
+6. Author: Zbigniew Romanowski; e-mail: romz@wp.pl
