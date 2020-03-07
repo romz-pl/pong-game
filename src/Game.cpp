@@ -3,6 +3,8 @@
 #include "Global_renderer.h"
 #include "Global_window.h"
 
+#include <iostream>
+
 Game::Game()
     : mIsRunning( true )
 {
@@ -14,8 +16,7 @@ Game::Game()
 //
 bool Game::Initialize()
 {
-
-    if( InitializeSDL() )
+    if( !InitializeSDL() )
     {
         return false;
     }
@@ -135,7 +136,7 @@ void Game::Shutdown()
     SDL_DestroyWindow( Global::window.get() );
     SDL_Quit();
 
-    Global::window.destroy();
     Global::renderer.destroy();
+    Global::window.destroy();
 }
 
