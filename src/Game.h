@@ -7,15 +7,9 @@
 // ----------------------------------------------------------------
 
 #pragma once
-#include "SDL.h"
 
-// Vector2 struct just stores x/y coordinates
-// (for now)
-struct Vector2
-{
-	float x;
-	float y;
-};
+#include "SDL.h"
+#include "Vector2d.h"
 
 // Game class
 class Game
@@ -47,10 +41,10 @@ private:
 	// Direction of paddle
 	int mPaddleDir;
 	// Position of paddle
-	Vector2 mPaddlePos;
+    Vector2d mPaddlePos;
 	// Position of ball
-	Vector2 mBallPos;
+    Vector2d mBallPos;
 	// Velocity of ball
-	Vector2 mBallVel;
+    Vector2d mBallVel;
 };
 
