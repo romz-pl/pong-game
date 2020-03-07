@@ -1,4 +1,4 @@
-# The clasic pong game based on SDL library
+# The clasic pong game
 
 1. More about the pong game can be found on [wiki pages](https://en.wikipedia.org/wiki/Pong).
 
