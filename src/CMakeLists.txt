@@ -5,6 +5,7 @@ add_executable( ${EXE_NAME}
     Pong.cpp
     Vector2d.cpp
     main.cpp
+    unique.cpp
 )
 
 #target_compile_options( ${TEST_NAME} PRIVATE ${ROMZ_CXX_FLAGS} )
