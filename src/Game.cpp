@@ -4,7 +4,7 @@
 #include "Global_window.h"
 
 Game::Game()
-    : mIsRunning(true)
+    : mIsRunning( true )
 {
 
 }
@@ -14,11 +14,9 @@ Game::Game()
 //
 bool Game::Initialize()
 {
-    // Initialize SDL
-    int sdlResult = SDL_Init(SDL_INIT_VIDEO);
-    if (sdlResult != 0)
+
+    if( InitializeSDL() )
     {
-        SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
         return false;
     }
 
@@ -33,6 +31,22 @@ bool Game::Initialize()
     }
 
     return m_pong.Initialize();
+}
+
+//
+// Initialize SDL
+//
+bool Game::InitializeSDL()
+{
+    const int sdlResult = SDL_Init( SDL_INIT_VIDEO );
+
+    if( sdlResult != 0 )
+    {
+        SDL_Log( "Unable to initialize SDL: %s", SDL_GetError() );
+        return false;
+    }
+
+    return true;
 }
 
 //
@@ -53,7 +67,7 @@ bool Game::InitializeWindow()
 
     if (!Global::window.get())
     {
-        SDL_Log("Failed to create window: %s", SDL_GetError());
+        SDL_Log( "Failed to create window: %s", SDL_GetError() );
         return false;
     }
 
@@ -75,7 +89,7 @@ bool Game::InitializeRenderer()
 
     if( !Global::renderer.get() )
     {
-        SDL_Log("Failed to create renderer: %s", SDL_GetError());
+        SDL_Log( "Failed to create renderer: %s", SDL_GetError() );
         return false;
     }
 

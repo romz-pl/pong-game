@@ -24,6 +24,7 @@ private:
 
     bool InitializeWindow();
     bool InitializeRenderer();
+    bool InitializeSDL();
 
 private:
     // Game should continue to run
