@@ -11,7 +11,7 @@ public:
     bool Initialize();
     void ProcessInput(bool& isRunning);
     void Update(bool &isRunning);
-    void GenerateOutput(SDL_Renderer* renderer);
+    void GenerateOutput();
 
 private:
     // Number of ticks since start of game

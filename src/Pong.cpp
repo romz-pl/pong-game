@@ -1,5 +1,7 @@
 #include "Pong.h"
 
+#include "Global_renderer.h"
+
 Pong::Pong()
     : mTicksCount(0)
     , mPaddleDir(0)
@@ -130,11 +132,11 @@ void Pong::Update(bool& isRunning)
     }
 }
 
-void Pong::GenerateOutput(SDL_Renderer* renderer)
+void Pong::GenerateOutput()
 {
     // Set draw color to blue
     SDL_SetRenderDrawColor(
-                renderer,
+                Global::renderer.get(),
                 0,		// R
                 0,		// G
                 255,	// B
@@ -142,10 +144,10 @@ void Pong::GenerateOutput(SDL_Renderer* renderer)
                 );
 
     // Clear back buffer
-    SDL_RenderClear(renderer);
+    SDL_RenderClear(Global::renderer.get());
 
     // Draw walls
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_SetRenderDrawColor(Global::renderer.get(), 255, 255, 255, 255);
 
     // Draw top wall
     SDL_Rect wall{
@@ -154,18 +156,18 @@ void Pong::GenerateOutput(SDL_Renderer* renderer)
         1024,		// Width
         thickness	// Height
     };
-    SDL_RenderFillRect(renderer, &wall);
+    SDL_RenderFillRect(Global::renderer.get(), &wall);
 
     // Draw bottom wall
     wall.y = 768 - thickness;
-    SDL_RenderFillRect(renderer, &wall);
+    SDL_RenderFillRect(Global::renderer.get(), &wall);
 
     // Draw right wall
     wall.x = 1024 - thickness;
     wall.y = 0;
     wall.w = thickness;
     wall.h = 1024;
-    SDL_RenderFillRect(renderer, &wall);
+    SDL_RenderFillRect(Global::renderer.get(), &wall);
 
     // Draw paddle
     SDL_Rect paddle{
@@ -174,7 +176,7 @@ void Pong::GenerateOutput(SDL_Renderer* renderer)
                 thickness,
                 static_cast<int>(paddleH)
     };
-    SDL_RenderFillRect(renderer, &paddle);
+    SDL_RenderFillRect(Global::renderer.get(), &paddle);
 
     // Draw ball
     SDL_Rect ball{
@@ -183,8 +185,8 @@ void Pong::GenerateOutput(SDL_Renderer* renderer)
                 thickness,
                 thickness
     };
-    SDL_RenderFillRect(renderer, &ball);
+    SDL_RenderFillRect(Global::renderer.get(), &ball);
 
     // Swap front buffer and back buffer
-    SDL_RenderPresent(renderer);
+    SDL_RenderPresent(Global::renderer.get());
 }

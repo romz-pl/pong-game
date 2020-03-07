@@ -1,9 +1,10 @@
 #include "Game.h"
+
+#include "Global_renderer.h"
 #include "Global_window.h"
 
 Game::Game()
-    : mRenderer(nullptr)
-    , mIsRunning(true)
+    : mIsRunning(true)
 {
 
 }
@@ -26,17 +27,8 @@ bool Game::Initialize()
         return false;
     }
 
-
-    //// Create SDL renderer
-    mRenderer = SDL_CreateRenderer(
-                Global::window.get(), // Window to create renderer for
-                -1,		 // Usually -1
-                SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
-                );
-
-    if (!mRenderer)
+    if( !InitializeRenderer() )
     {
-        SDL_Log("Failed to create renderer: %s", SDL_GetError());
         return false;
     }
 
@@ -49,6 +41,7 @@ bool Game::Initialize()
 bool Game::InitializeWindow()
 {
     Global::window.init();
+
     Global::window.get() = SDL_CreateWindow(
                 "Game Programming in C++ (Chapter 1)", // Window title
                 100,	// Top left x-coordinate of window
@@ -61,6 +54,28 @@ bool Game::InitializeWindow()
     if (!Global::window.get())
     {
         SDL_Log("Failed to create window: %s", SDL_GetError());
+        return false;
+    }
+
+    return true;
+}
+
+//
+// Create SDL renderer
+//
+bool Game::InitializeRenderer()
+{
+    Global::renderer.init();
+
+    Global::renderer.get() = SDL_CreateRenderer(
+                Global::window.get(), // Window to create renderer for
+                -1,		 // Usually -1
+                SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
+                );
+
+    if( !Global::renderer.get() )
+    {
+        SDL_Log("Failed to create renderer: %s", SDL_GetError());
         return false;
     }
 
@@ -97,15 +112,16 @@ void Game::UpdateGame()
 
 void Game::GenerateOutput()
 {
-    m_pong.GenerateOutput(mRenderer);
+    m_pong.GenerateOutput();
 }
 
 void Game::Shutdown()
 {
-    SDL_DestroyRenderer(mRenderer);
-    SDL_DestroyWindow(Global::window.get());
+    SDL_DestroyRenderer( Global::renderer.get() );
+    SDL_DestroyWindow( Global::window.get() );
     SDL_Quit();
 
     Global::window.destroy();
+    Global::renderer.destroy();
 }
 

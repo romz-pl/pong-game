@@ -23,12 +23,9 @@ private:
     void GenerateOutput();
 
     bool InitializeWindow();
+    bool InitializeRenderer();
 
 private:
-
-    // Renderer for 2D drawing
-    SDL_Renderer* mRenderer;
-
     // Game should continue to run
     bool mIsRunning;
 
