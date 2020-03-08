@@ -4,8 +4,7 @@
 #include "Global_window.h"
 
 Pong::Pong()
-    : mTicksCount(0)
-    , mPaddleDir(0)
+    : mTicksCount(0)   
 {
 
 }
@@ -13,10 +12,8 @@ Pong::Pong()
 bool Pong::Initialize()
 {
 
+    mPaddle.Initialize();
 
-    //
-    mPaddlePos.x = 10.0f;
-    mPaddlePos.y = 0.5 * Global::GetWindowH();
     mBallPos.x = 0.5f * Global::GetWindowW();
     mBallPos.y = 0.5f * Global::GetWindowH();
     mBallVel.x = -200.0f;
@@ -47,14 +44,14 @@ void Pong::ProcessInput(bool &isRunning)
     }
 
     // Update paddle direction based on W/S keys
-    mPaddleDir = 0;
+    mPaddle.mDir = 0;
     if (state[SDL_SCANCODE_W])
     {
-        mPaddleDir -= 1;
+        mPaddle.mDir -= 1;
     }
     if (state[SDL_SCANCODE_S])
     {
-        mPaddleDir += 1;
+        mPaddle.mDir += 1;
     }
 }
 
@@ -78,17 +75,17 @@ void Pong::Update(bool& isRunning)
     mTicksCount = SDL_GetTicks();
 
     // Update paddle position based on direction
-    if (mPaddleDir != 0)
+    if (mPaddle.mDir != 0)
     {
-        mPaddlePos.y += mPaddleDir * 300.0f * deltaTime;
+        mPaddle.my += mPaddle.mDir * 300.0f * deltaTime;
         // Make sure paddle doesn't move off screen!
-        if (mPaddlePos.y < (paddleH/2.0f + thickness))
+        if (mPaddle.my < (paddleH/2.0f + thickness))
         {
-            mPaddlePos.y = paddleH/2.0f + thickness;
+            mPaddle.my = paddleH/2.0f + thickness;
         }
-        else if (mPaddlePos.y > (Global::GetWindowH() - paddleH/2.0f - thickness))
+        else if (mPaddle.my > (Global::GetWindowH() - paddleH/2.0f - thickness))
         {
-            mPaddlePos.y = Global::GetWindowH() - paddleH/2.0f - thickness;
+            mPaddle.my = Global::GetWindowH() - paddleH/2.0f - thickness;
         }
     }
 
@@ -98,7 +95,7 @@ void Pong::Update(bool& isRunning)
 
     // Bounce if needed
     // Did we intersect with the paddle?
-    float diff = mPaddlePos.y - mBallPos.y;
+    float diff = mPaddle.my - mBallPos.y;
     // Take absolute value of difference
     diff = (diff > 0.0f) ? diff : -diff;
     if (
@@ -174,8 +171,8 @@ void Pong::GenerateOutput()
 
     // Draw paddle
     SDL_Rect paddle{
-        static_cast<int>(mPaddlePos.x),
-                static_cast<int>(mPaddlePos.y - paddleH/2),
+        static_cast<int>(mPaddle.mx),
+                static_cast<int>(mPaddle.my - paddleH/2),
                 thickness,
                 static_cast<int>(paddleH)
     };
