@@ -69,20 +69,10 @@ void Pong::Update(bool& isRunning)
     // Update tick counts (for next frame)
     mTicksCount = SDL_GetTicks();
 
-    // Update paddle position based on direction
-    if (mPaddle.mDir != 0)
-    {
-        mPaddle.my += mPaddle.mDir * 300.0f * deltaTime;
-        // Make sure paddle doesn't move off screen!
-        if (mPaddle.my < (paddleH/2.0f + thickness))
-        {
-            mPaddle.my = paddleH/2.0f + thickness;
-        }
-        else if (mPaddle.my > (Global::GetWindowH() - paddleH/2.0f - thickness))
-        {
-            mPaddle.my = Global::GetWindowH() - paddleH/2.0f - thickness;
-        }
-    }
+    mPaddle.Update( deltaTime );
+
+
+
 
     // Update ball position based on ball velocity
     mBall.mx += mBall.mvx * deltaTime;
@@ -95,7 +85,7 @@ void Pong::Update(bool& isRunning)
     diff = (diff > 0.0f) ? diff : -diff;
     if (
             // Our y-difference is small enough
-            diff <= paddleH / 2.0f &&
+            diff <= mPaddle.paddleH / 2.0f &&
             // We are in the correct x-position
             mBall.mx <= 25.0f && mBall.mx >= 20.0f &&
             // The ball is moving to the left
@@ -109,18 +99,18 @@ void Pong::Update(bool& isRunning)
         isRunning = false;
     }
     // Did the ball collide with the right wall?
-    else if (mBall.mx >= (Global::GetWindowW() - thickness) && mBall.mvx > 0.0f)
+    else if (mBall.mx >= (Global::GetWindowW() - mPaddle.thickness) && mBall.mvx > 0.0f)
     {
         mBall.mvx *= -1.0f;
     }
 
     // Did the ball collide with the top wall?
-    if (mBall.my <= thickness && mBall.mvy < 0.0f)
+    if (mBall.my <= mPaddle.thickness && mBall.mvy < 0.0f)
     {
         mBall.mvy *= -1;
     }
     // Did the ball collide with the bottom wall?
-    else if (mBall.my >= (Global::GetWindowH() - thickness) &&
+    else if (mBall.my >= (Global::GetWindowH() - mPaddle.thickness) &&
              mBall.mvy > 0.0f)
     {
         mBall.mvy *= -1;
@@ -149,36 +139,36 @@ void Pong::GenerateOutput()
         0,			// Top left x
         0,			// Top left y
         Global::GetWindowW(),		// Width
-        thickness	// Height
+        mPaddle.thickness	// Height
     };
     SDL_RenderFillRect(Global::renderer.get(), &wall);
 
     // Draw bottom wall
-    wall.y = Global::GetWindowH() - thickness;
+    wall.y = Global::GetWindowH() - mPaddle.thickness;
     SDL_RenderFillRect(Global::renderer.get(), &wall);
 
     // Draw right wall
-    wall.x = Global::GetWindowW() - thickness;
+    wall.x = Global::GetWindowW() - mPaddle.thickness;
     wall.y = 0;
-    wall.w = thickness;
+    wall.w = mPaddle.thickness;
     wall.h = Global::GetWindowW();
     SDL_RenderFillRect(Global::renderer.get(), &wall);
 
     // Draw paddle
     SDL_Rect paddle{
         static_cast<int>(mPaddle.mx),
-                static_cast<int>(mPaddle.my - paddleH/2),
-                thickness,
-                static_cast<int>(paddleH)
+                static_cast<int>(mPaddle.my - mPaddle.paddleH/2),
+                mPaddle.thickness,
+                static_cast<int>(mPaddle.paddleH)
     };
     SDL_RenderFillRect(Global::renderer.get(), &paddle);
 
     // Draw ball
     SDL_Rect ball{
-        static_cast<int>(mBall.mx - thickness/2),
-                static_cast<int>(mBall.my - thickness/2),
-                thickness,
-                thickness
+        static_cast<int>(mBall.mx - mPaddle.thickness/2),
+                static_cast<int>(mBall.my - mPaddle.thickness/2),
+                mPaddle.thickness,
+                mPaddle.thickness
     };
     SDL_RenderFillRect(Global::renderer.get(), &ball);
 

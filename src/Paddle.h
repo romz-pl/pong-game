@@ -4,6 +4,7 @@ class Paddle
 {
 public:
     void Initialize();
+    void Update( float deltaTime );
 
 public:
     // Direction of paddle
@@ -14,4 +15,7 @@ public:
 
     // Position of paddle, Y
     float my = 0.0f;
+
+    const int thickness = 15;
+    const float paddleH = 100.0f;
 };
