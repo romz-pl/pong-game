@@ -1,5 +1,6 @@
 #include "Paddle.h"
 
+#include "Global_renderer.h"
 #include "Global_window.h"
 
 void Paddle::Initialize()
@@ -27,4 +28,18 @@ void Paddle::Update( float deltaTime )
             my = Global::GetWindowH() - paddleH/2.0f - thickness;
         }
     }
+}
+
+//
+// Draw paddle
+//
+void Paddle::GenerateOutput()
+{
+    SDL_Rect rect{
+        static_cast<int>(mx),
+                static_cast<int>(my - paddleH/2),
+                thickness,
+                static_cast<int>(paddleH)
+    };
+    SDL_RenderFillRect(Global::renderer.get(), &rect);
 }

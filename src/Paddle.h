@@ -5,6 +5,7 @@ class Paddle
 public:
     void Initialize();
     void Update( float deltaTime );
+    void GenerateOutput();
 
 public:
     // Direction of paddle

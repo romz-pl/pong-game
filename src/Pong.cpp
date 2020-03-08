@@ -154,14 +154,10 @@ void Pong::GenerateOutput()
     wall.h = Global::GetWindowW();
     SDL_RenderFillRect(Global::renderer.get(), &wall);
 
-    // Draw paddle
-    SDL_Rect paddle{
-        static_cast<int>(mPaddle.mx),
-                static_cast<int>(mPaddle.my - mPaddle.paddleH/2),
-                mPaddle.thickness,
-                static_cast<int>(mPaddle.paddleH)
-    };
-    SDL_RenderFillRect(Global::renderer.get(), &paddle);
+    mPaddle.GenerateOutput();
+
+
+
 
     // Draw ball
     SDL_Rect ball{
