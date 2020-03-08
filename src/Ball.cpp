@@ -1,5 +1,6 @@
 #include "Ball.h"
 
+#include "Global_renderer.h"
 #include "Global_window.h"
 
 void Ball::Initialize()
@@ -9,4 +10,19 @@ void Ball::Initialize()
 
     mvx = -200.0f;
     mvy = 235.0f;
+}
+
+//
+// Draw ball
+//
+void Ball::GenerateOutput( int thickness )
+{
+    SDL_Rect ball{
+        static_cast<int>(mx - thickness/2),
+        static_cast<int>(my - thickness/2),
+        thickness,
+        thickness
+    };
+
+    SDL_RenderFillRect(Global::renderer.get(), &ball);
 }

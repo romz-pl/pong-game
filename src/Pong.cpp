@@ -155,18 +155,8 @@ void Pong::GenerateOutput()
     SDL_RenderFillRect(Global::renderer.get(), &wall);
 
     mPaddle.GenerateOutput();
+    mBall.GenerateOutput( mPaddle.thickness );
 
-
-
-
-    // Draw ball
-    SDL_Rect ball{
-        static_cast<int>(mBall.mx - mPaddle.thickness/2),
-                static_cast<int>(mBall.my - mPaddle.thickness/2),
-                mPaddle.thickness,
-                mPaddle.thickness
-    };
-    SDL_RenderFillRect(Global::renderer.get(), &ball);
 
     // Swap front buffer and back buffer
     SDL_RenderPresent(Global::renderer.get());

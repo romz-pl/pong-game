@@ -4,6 +4,7 @@ class Ball
 {
 public:
     void Initialize();
+    void GenerateOutput( int thickness );
 
 public:
     // Position of ball, X
