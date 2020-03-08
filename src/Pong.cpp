@@ -11,13 +11,8 @@ Pong::Pong()
 
 bool Pong::Initialize()
 {
-
     mPaddle.Initialize();
-
-    mBallPos.x = 0.5f * Global::GetWindowW();
-    mBallPos.y = 0.5f * Global::GetWindowH();
-    mBallVel.x = -200.0f;
-    mBallVel.y = 235.0f;
+    mBall.Initialize();
 
     return true;
 }
@@ -90,45 +85,45 @@ void Pong::Update(bool& isRunning)
     }
 
     // Update ball position based on ball velocity
-    mBallPos.x += mBallVel.x * deltaTime;
-    mBallPos.y += mBallVel.y * deltaTime;
+    mBall.mx += mBall.mvx * deltaTime;
+    mBall.my += mBall.mvy * deltaTime;
 
     // Bounce if needed
     // Did we intersect with the paddle?
-    float diff = mPaddle.my - mBallPos.y;
+    float diff = mPaddle.my - mBall.my;
     // Take absolute value of difference
     diff = (diff > 0.0f) ? diff : -diff;
     if (
             // Our y-difference is small enough
             diff <= paddleH / 2.0f &&
             // We are in the correct x-position
-            mBallPos.x <= 25.0f && mBallPos.x >= 20.0f &&
+            mBall.mx <= 25.0f && mBall.mx >= 20.0f &&
             // The ball is moving to the left
-            mBallVel.x < 0.0f)
+            mBall.mvx < 0.0f)
     {
-        mBallVel.x *= -1.0f;
+        mBall.mvx *= -1.0f;
     }
     // Did the ball go off the screen? (if so, end game)
-    else if (mBallPos.x <= 0.0f)
+    else if (mBall.mx <= 0.0f)
     {
         isRunning = false;
     }
     // Did the ball collide with the right wall?
-    else if (mBallPos.x >= (Global::GetWindowW() - thickness) && mBallVel.x > 0.0f)
+    else if (mBall.mx >= (Global::GetWindowW() - thickness) && mBall.mvx > 0.0f)
     {
-        mBallVel.x *= -1.0f;
+        mBall.mvx *= -1.0f;
     }
 
     // Did the ball collide with the top wall?
-    if (mBallPos.y <= thickness && mBallVel.y < 0.0f)
+    if (mBall.my <= thickness && mBall.mvy < 0.0f)
     {
-        mBallVel.y *= -1;
+        mBall.mvy *= -1;
     }
     // Did the ball collide with the bottom wall?
-    else if (mBallPos.y >= (Global::GetWindowH() - thickness) &&
-             mBallVel.y > 0.0f)
+    else if (mBall.my >= (Global::GetWindowH() - thickness) &&
+             mBall.mvy > 0.0f)
     {
-        mBallVel.y *= -1;
+        mBall.mvy *= -1;
     }
 }
 
@@ -180,8 +175,8 @@ void Pong::GenerateOutput()
 
     // Draw ball
     SDL_Rect ball{
-        static_cast<int>(mBallPos.x - thickness/2),
-                static_cast<int>(mBallPos.y - thickness/2),
+        static_cast<int>(mBall.mx - thickness/2),
+                static_cast<int>(mBall.my - thickness/2),
                 thickness,
                 thickness
     };

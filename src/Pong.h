@@ -3,6 +3,7 @@
 #include "SDL.h"
 #include "Vector2d.h"
 #include "Paddle.h"
+#include "Ball.h"
 
 class Pong
 {
@@ -20,11 +21,7 @@ private:
 
     Paddle mPaddle;
 
-    // Position of ball
-    Vector2d mBallPos;
-
-    // Velocity of ball
-    Vector2d mBallVel;
+    Ball mBall;
 
     const int thickness = 15;
     const float paddleH = 100.0f;

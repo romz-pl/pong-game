@@ -1,6 +1,7 @@
 SET(EXE_NAME pong)
 
 add_executable( ${EXE_NAME}
+    Ball.cpp
     Game.cpp
     Global_renderer.cpp
     Global_window.cpp
