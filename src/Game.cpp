@@ -58,7 +58,7 @@ bool Game::InitializeWindow()
     Global::window.init();
 
     Global::window.get() = SDL_CreateWindow(
-                "Game Programming in C++ (Chapter 1)", // Window title
+                "The clasic pong game", // Window title
                 100,	// Top left x-coordinate of window
                 100,	// Top left y-coordinate of window
                 1024,	// Width of window
