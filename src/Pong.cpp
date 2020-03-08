@@ -70,13 +70,8 @@ void Pong::Update(bool& isRunning)
     mTicksCount = SDL_GetTicks();
 
     mPaddle.Update( deltaTime );
+    mBall.Update( deltaTime );
 
-
-
-
-    // Update ball position based on ball velocity
-    mBall.mx += mBall.mvx * deltaTime;
-    mBall.my += mBall.mvy * deltaTime;
 
     // Bounce if needed
     // Did we intersect with the paddle?
@@ -134,25 +129,9 @@ void Pong::GenerateOutput()
     // Draw walls
     SDL_SetRenderDrawColor(Global::renderer.get(), 255, 255, 255, 255);
 
-    // Draw top wall
-    SDL_Rect wall{
-        0,			// Top left x
-        0,			// Top left y
-        Global::GetWindowW(),		// Width
-        mPaddle.thickness	// Height
-    };
-    SDL_RenderFillRect(Global::renderer.get(), &wall);
-
-    // Draw bottom wall
-    wall.y = Global::GetWindowH() - mPaddle.thickness;
-    SDL_RenderFillRect(Global::renderer.get(), &wall);
-
-    // Draw right wall
-    wall.x = Global::GetWindowW() - mPaddle.thickness;
-    wall.y = 0;
-    wall.w = mPaddle.thickness;
-    wall.h = Global::GetWindowW();
-    SDL_RenderFillRect(Global::renderer.get(), &wall);
+    DrawTopWall();
+    DrawBottomWall();
+    DrawRightWall();
 
     mPaddle.GenerateOutput();
     mBall.GenerateOutput( mPaddle.thickness );
@@ -160,4 +139,49 @@ void Pong::GenerateOutput()
 
     // Swap front buffer and back buffer
     SDL_RenderPresent(Global::renderer.get());
+}
+
+//
+// Draw top wall
+//
+void Pong::DrawTopWall() const
+{
+
+    SDL_Rect wall{
+        0,			// Top left x
+        0,			// Top left y
+        Global::GetWindowW(),		// Width
+        mPaddle.thickness	// Height
+    };
+    SDL_RenderFillRect(Global::renderer.get(), &wall);
+}
+
+//
+// Draw bottom wall
+//
+void Pong::DrawBottomWall() const
+{
+    // Draw top wall
+    SDL_Rect wall{
+        0,			// Top left x
+        Global::GetWindowH() - mPaddle.thickness,			// Top left y
+        Global::GetWindowW(),		// Width
+        mPaddle.thickness	// Height
+    };
+
+    SDL_RenderFillRect(Global::renderer.get(), &wall);
+}
+
+//
+// Draw right wall
+//
+void Pong::DrawRightWall() const
+{
+    SDL_Rect wall{
+        Global::GetWindowW() - mPaddle.thickness,
+        0,
+        mPaddle.thickness,
+        Global::GetWindowW()
+    };
+    SDL_RenderFillRect(Global::renderer.get(), &wall);
 }

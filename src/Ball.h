@@ -4,6 +4,7 @@ class Ball
 {
 public:
     void Initialize();
+    void Update( float deltaTime );
     void GenerateOutput( int thickness );
 
 public:

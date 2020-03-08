@@ -16,6 +16,11 @@ public:
     void GenerateOutput();
 
 private:
+    void DrawTopWall() const;
+    void DrawBottomWall() const;
+    void DrawRightWall() const;
+
+private:
     // Number of ticks since start of game
     Uint32 mTicksCount;
 

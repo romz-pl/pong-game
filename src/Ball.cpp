@@ -13,6 +13,15 @@ void Ball::Initialize()
 }
 
 //
+// Update ball position based on ball velocity
+//
+void Ball::Update( float deltaTime )
+{
+    mx += mvx * deltaTime;
+    my += mvy * deltaTime;
+}
+
+//
 // Draw ball
 //
 void Ball::GenerateOutput( int thickness )
