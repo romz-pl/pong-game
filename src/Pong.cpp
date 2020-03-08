@@ -50,14 +50,12 @@ void Pong::ProcessInput(bool &isRunning)
     }
 }
 
-void Pong::Update(bool& isRunning)
+//
+// Delta time is the difference in ticks from last frame
+// (converted to seconds)
+//
+float Pong::GetDeltaTime()
 {
-    // Wait until 16ms has elapsed since last frame
-    while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16))
-        ;
-
-    // Delta time is the difference in ticks from last frame
-    // (converted to seconds)
     float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
 
     // Clamp maximum delta time value
@@ -68,6 +66,19 @@ void Pong::Update(bool& isRunning)
 
     // Update tick counts (for next frame)
     mTicksCount = SDL_GetTicks();
+
+    return deltaTime;
+}
+
+void Pong::Update(bool& isRunning)
+{
+    // Wait until 16ms has elapsed since last frame
+    while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16))
+    {
+        ; // do nothing!
+    }
+
+    const float deltaTime = GetDeltaTime();
 
     mPaddle.Update( deltaTime );
     mBall.Update( deltaTime );

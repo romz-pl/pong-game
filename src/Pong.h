@@ -21,6 +21,8 @@ private:
     void DrawBottomWall() const;
     void DrawRightWall() const;
 
+    float GetDeltaTime();
+
 private:
     // Number of ticks since start of game
     Uint32 mTicksCount;
