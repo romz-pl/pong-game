@@ -16,6 +16,7 @@ public:
     void GenerateOutput();
 
 private:
+    void DrawWalls() const;
     void DrawTopWall() const;
     void DrawBottomWall() const;
     void DrawRightWall() const;

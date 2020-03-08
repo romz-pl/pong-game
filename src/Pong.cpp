@@ -115,30 +115,30 @@ void Pong::Update(bool& isRunning)
 void Pong::GenerateOutput()
 {
     // Set draw color to blue
-    SDL_SetRenderDrawColor(
-                Global::renderer.get(),
-                0,		// R
-                0,		// G
-                255,	// B
-                255		// A
-                );
+    SDL_SetRenderDrawColor( Global::renderer.get(), 0, 0, 255, 255 );
 
     // Clear back buffer
-    SDL_RenderClear(Global::renderer.get());
+    SDL_RenderClear( Global::renderer.get() );
 
-    // Draw walls
+    DrawWalls();
+
+    mPaddle.GenerateOutput();
+    mBall.GenerateOutput( mPaddle.thickness );
+
+    // Swap front buffer and back buffer
+    SDL_RenderPresent(Global::renderer.get());
+}
+
+//
+// Draw walls
+//
+void Pong::DrawWalls() const
+{
     SDL_SetRenderDrawColor(Global::renderer.get(), 255, 255, 255, 255);
 
     DrawTopWall();
     DrawBottomWall();
     DrawRightWall();
-
-    mPaddle.GenerateOutput();
-    mBall.GenerateOutput( mPaddle.thickness );
-
-
-    // Swap front buffer and back buffer
-    SDL_RenderPresent(Global::renderer.get());
 }
 
 //
